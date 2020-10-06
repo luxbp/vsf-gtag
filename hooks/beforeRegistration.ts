@@ -13,8 +13,19 @@ export function beforeRegistration ({ Vue, config, store, isServer }) {
     })
   } else {
     Logger.warn(
-      'Google Analytics extension is not working. Ensure Google Analytics account ID is defined in config',
+      'GTag extension is not working. Ensure Google Analytics account ID is defined in config',
       'GA'
     )()
+  }
+
+  if (config.googleTagManager.id && !isServer) {
+    Vue.use(VueGtm, {
+      id: config.googleTagManager.id,
+      enabled: true,
+      debug: config.googleTagManager.debug,
+      vueRouter: router
+    });
+  } else {
+    Logger.warn('Google Tag Manager extensions is not working. Ensure Google Tag Manager container ID is defined in config', 'GTM')()
   }
 }
