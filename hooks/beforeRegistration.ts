@@ -6,7 +6,7 @@ import { once } from '@vue-storefront/core/helpers'
 
 export function beforeRegistration ({ Vue, config, store, isServer }) {
   if (config.analytics.id && !isServer) {
-    once('__VUE_EXTEND_ANALYTICS__', () => {
+    once('__VUE_GTAG_VSF__', () => {
       Vue.use(VueGtag, {
         config: {id: config.analytics.id}
       });
@@ -19,11 +19,13 @@ export function beforeRegistration ({ Vue, config, store, isServer }) {
   }
 
   if (config.googleTagManager.id && !isServer) {
-    Vue.use(VueGtm, {
-      id: config.googleTagManager.id,
-      enabled: true,
-      debug: config.googleTagManager.debug,
-      vueRouter: router
+    once('__VUE_GTM_VSF__', () => {
+      Vue.use(VueGtm, {
+        id: config.googleTagManager.id,
+        enabled: true,
+        debug: config.googleTagManager.debug,
+        vueRouter: router
+      });
     });
   } else {
     Logger.warn('Google Tag Manager extensions is not working. Ensure Google Tag Manager container ID is defined in config', 'GTM')()
