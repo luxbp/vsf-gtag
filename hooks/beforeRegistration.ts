@@ -1,6 +1,6 @@
-import VueAnalytics from 'vue-analytics'
 import { router } from '@vue-storefront/core/app'
 import VueGtag from 'vue-gtag';
+import VueGtm from 'vue-gtm';
 import { Logger } from '@vue-storefront/core/lib/logger'
 import { once } from '@vue-storefront/core/helpers'
 
