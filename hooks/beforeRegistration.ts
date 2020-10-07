@@ -8,8 +8,12 @@ export function beforeRegistration ({ Vue, config, store, isServer }) {
   if (config.analytics.id && !isServer) {
     once('__VUE_GTAG_VSF__', () => {
       Vue.use(VueGtag, {
-        config: {id: config.analytics.id}
-      });
+        config: {
+          id: config.analytics.id,
+          appName: 'Vue Storefront',
+          pageTrackerScreenviewEnabled: true
+        }
+      }, router);
     })
   } else {
     Logger.warn(
