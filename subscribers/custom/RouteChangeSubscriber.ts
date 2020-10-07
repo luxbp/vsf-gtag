@@ -23,10 +23,10 @@ export default (store) => store.subscribe((mutation, state) => {
       }
     });
 
-    Vue.prototype.$gtag.pageview({
+/*    Vue.prototype.$gtag.pageview({
       page_title: route.to.name,
       page_location: route.to.path,
       page_path: route.to.fullPath
-    })
+    })*/
   }
 });
