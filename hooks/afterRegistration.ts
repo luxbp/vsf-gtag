@@ -13,6 +13,8 @@ import CheckoutFunnelSubscriber from '../subscribers/CheckoutFunnelSubscriber';
 import CartStateSubscriber from '../subscribers/custom/CartStateSubscriber';
 import { isServer } from '@vue-storefront/core/helpers';
 import EventBus from '@vue-storefront/core/compatibility/plugins/event-bus';
+import { currentStoreView } from '@vue-storefront/core/lib/multistore'
+import Vue from 'vue';
 
 declare const window;
 
@@ -28,7 +30,23 @@ function applyClientId (product) {
 }
 
 export function afterRegistration (appConfig, store) {
-  if (appConfig.analytics.id && !isServer) {
+  if (appConfig.analytics && appConfig.analytics.id && !isServer) {
+    const view = currentStoreView();
+
+    if (appConfig.analytics.custom_map) {
+      Vue.prototype.gtag('config', 'GA_MEASUREMENT_ID', {
+        'custom_map': {
+          'dimension1': 'Store Code',
+          ...(appConfig.analytics.custom_map || {})
+        }
+      });
+
+      Vue.prototype.gtag('event', 'store_code_dimension', {
+        'Store Code': view.storeCode
+      });
+    }
+
+
     let subscribers = [
       RouteChangeSubscriber,
       CategoryImpressionSubscriber,

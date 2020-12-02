@@ -1,5 +1,5 @@
 import createProductCategoryName from './createProductCategoryName';
-import {currentStoreView} from '@vue-storefront/core/lib/multistore'
+import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 
 export default (product, opts: Record<string, any> = {}) => {
   const view = currentStoreView();
