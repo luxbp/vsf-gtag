@@ -32,18 +32,9 @@ function applyClientId (product) {
 export function afterRegistration (appConfig, store) {
   if (appConfig.analytics && appConfig.analytics.id && !isServer) {
     const view = currentStoreView();
-    Vue.prototype.gtag('config', 'GA_MEASUREMENT_ID', {
-      'custom_map': {
-        'dimension1': 'Store Code',
-        ...(appConfig.analytics.custom_map || {})
-      }
-    });
 
-    Vue.prototype.gtag('event', 'store_code_dimension', {
-      'Store Code': view.storeCode
-    });
-
-
+    Vue.prototype.$gtag.customMap({ 'dimension1': 'Store Code' });
+    Vue.prototype.$gtag.event('store_code_dimension', { 'Store Code': view.storeCode });
 
     let subscribers = [
       RouteChangeSubscriber,
