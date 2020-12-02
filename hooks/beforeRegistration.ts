@@ -1,16 +1,17 @@
+import Vue from 'vue'
 import { router } from '@vue-storefront/core/app'
 import VueGtag from 'vue-gtag';
 import VueGtm from 'vue-gtm';
 import { Logger } from '@vue-storefront/core/lib/logger'
-import { once } from '@vue-storefront/core/helpers'
+import { once, isServer } from '@vue-storefront/core/helpers'
 
-export function beforeRegistration ({ Vue, config, store, isServer }) {
-  if (config.analytics.id && !isServer) {
+export function beforeRegistration (appConfig, store) {
+  if (appConfig.analytics.id && !isServer) {
     once('__VUE_GTAG_VSF__', () => {
       Vue.use(VueGtag, {
         config: {
-          id: config.analytics.id,
-          appName: 'Vue Storefront',
+          id: appConfig.analytics.id,
+          appName: 'Storefront',
           pageTrackerScreenviewEnabled: true
         }
       }, router);
@@ -22,12 +23,12 @@ export function beforeRegistration ({ Vue, config, store, isServer }) {
     )()
   }
 
-  if (config.googleTagManager.id && !isServer) {
+  if (appConfig.googleTagManager.id && !isServer) {
     once('__VUE_GTM_VSF__', () => {
       Vue.use(VueGtm, {
-        id: config.googleTagManager.id,
+        id: appConfig.googleTagManager.id,
         enabled: true,
-        debug: config.googleTagManager.debug,
+        debug: appConfig.googleTagManager.debug,
         vueRouter: router
       });
     });

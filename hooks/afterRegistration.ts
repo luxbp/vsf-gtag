@@ -11,9 +11,10 @@ import PromotionClicks from '../subscribers/PromotionClicks';
 import CategoryImpressionSubscriber from '../subscribers/custom/CategoryImpressionSubscriber';
 import CheckoutFunnelSubscriber from '../subscribers/CheckoutFunnelSubscriber';
 import CartStateSubscriber from '../subscribers/custom/CartStateSubscriber';
+import { isServer } from '@vue-storefront/core/helpers';
 
-export function afterRegistration ({Vue, config, store, isServer}) {
-  if (config.analytics.id && !isServer) {
+export function afterRegistration (appConfig, store) {
+  if (appConfig.analytics.id && !isServer) {
     let subscribers = [
       RouteChangeSubscriber,
       CategoryImpressionSubscriber,
