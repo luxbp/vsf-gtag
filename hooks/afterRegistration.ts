@@ -12,6 +12,20 @@ import CategoryImpressionSubscriber from '../subscribers/custom/CategoryImpressi
 import CheckoutFunnelSubscriber from '../subscribers/CheckoutFunnelSubscriber';
 import CartStateSubscriber from '../subscribers/custom/CartStateSubscriber';
 import { isServer } from '@vue-storefront/core/helpers';
+import EventBus from '@vue-storefront/core/compatibility/plugins/event-bus';
+
+declare const window;
+
+function applyClientId (product) {
+  window.ga = window.ga || function (func) {};
+  window.ga((tracker) => {
+    let clientId = tracker.get('clientId');
+    let prod = product.product;
+    prod.product_option = prod.product_option || {};
+    prod.product_option.extension_attributes = prod.product_option.extension_attributes || {};
+    prod.product_option.extension_attributes.ga_client_id = clientId
+  })
+}
 
 export function afterRegistration (appConfig, store) {
   if (appConfig.analytics.id && !isServer) {
@@ -32,5 +46,13 @@ export function afterRegistration (appConfig, store) {
     ];
 
     subscribers.map(register => register(store));
+
+    EventBus.$on('cart-before-add', product => {
+      applyClientId(product)
+    });
+
+    EventBus.$on('cart-before-update', product => {
+      applyClientId(product)
+    })
   }
 }
