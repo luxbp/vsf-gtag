@@ -11,7 +11,7 @@ import Vue from 'vue';
 export default (store) => store.subscribe((mutation, state) => {
   const type = mutation.type;
 
-  if (type.endsWith(types.CATALOG_SET_PRODUCT_ORIGINAL)) {
+  if (type.endsWith(types.PRODUCT_SET_CURRENT)) {
     Vue.prototype.$gtag.event('select_content', {
       'content_type': 'product',
       'items': [createProductData(mutation.payload, {
