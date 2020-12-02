@@ -17,17 +17,8 @@ export function afterRegistration ({Vue, config, store, isServer}) {
   if (config.analytics.id && !isServer) {
     const view = currentStoreView();
 
-    Vue.prototype.gtag('config', 'GA_MEASUREMENT_ID', {
-      'custom_map': {
-        'dimension1': 'Store Code',
-        ...(config.analytics.custom_map || {})
-      }
-    });
-
-    Vue.prototype.gtag('event', 'store_code_dimension', {
-      'Store Code': view.storeCode
-    });
-
+    Vue.prototype.$gtag.customMap({ 'dimension1': 'Store Code' });
+    Vue.prototype.$gtag.event('store_code_dimension', { 'Store Code': view.storeCode });
 
     let subscribers = [
       RouteChangeSubscriber,
