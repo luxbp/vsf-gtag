@@ -32,7 +32,7 @@ export default (store) => store.subscribe((mutation, state) => {
         Vue.prototype.$gtag.event('purchase', {
           'transaction_id': payload.confirmation.orderNumber || orderId,
           'affiliation': order.store_name,
-          'value': order.subtotal,
+          'value': order.subtotal - Math.abs((order.base_discount_amount || 0)),
           'currency': 'USD',
           'tax': order.tax_amount,
           'shipping': order.shipping_amount,
