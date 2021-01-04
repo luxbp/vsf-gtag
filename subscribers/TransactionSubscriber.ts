@@ -1,4 +1,5 @@
 import createProductData from '../helper/createProductData';
+import { currentStoreView } from '@vue-storefront/core/lib/multistore';
 import config from 'config';
 import Vue from 'vue';
 
@@ -11,6 +12,7 @@ export default (store) => store.subscribe((mutation, state) => {
   const payload = mutation.payload;
 
   if (type.endsWith('order/order/LAST_ORDER_CONFIRMATION')) {
+    const cartHistory = Object.assign({}, state.user.cart);
     const orderId = payload.confirmation.backendOrderId;
     const products = payload.order.products.map((product, index) => createProductData(product, {position: index}));
     store.dispatch(
@@ -20,9 +22,16 @@ export default (store) => store.subscribe((mutation, state) => {
       const orderHistory = state.user.orders_history;
 
       // in the event this is empty, tag manager should pull order and tax from CartStateSubscriber
-      if (!orderHistory) {
+      if (!orderHistory && cartHistory.platformTotals) {
         Vue.prototype.$gtag.event('purchase', {
-          'transaction_id': payload.confirmation.orderNumber || orderId
+          'transaction_id': payload.confirmation.orderNumber || orderId,
+          'value': cartHistory.platformTotals.subtotal - Math.abs((cartHistory.platformTotals.base_discount_amount || 0)),
+          'affiliation': payload.order.affiliation || currentStoreView().storeCode,
+          'currency': 'USD',
+          'tax': cartHistory.platformTotals.tax_amount,
+          'shipping': cartHistory.platformTotals.shipping_amount,
+          'coupon': cartHistory.platformTotals.coupon_code,
+          'items': products
         });
         return;
       }
@@ -31,7 +40,7 @@ export default (store) => store.subscribe((mutation, state) => {
       if (order) {
         Vue.prototype.$gtag.event('purchase', {
           'transaction_id': payload.confirmation.orderNumber || orderId,
-          'affiliation': order.store_name,
+          'affiliation': payload.order.affiliation || currentStoreView().storeCode || order.store_name,
           'value': order.subtotal - Math.abs((order.base_discount_amount || 0)),
           'currency': 'USD',
           'tax': order.tax_amount,
