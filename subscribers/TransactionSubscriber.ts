@@ -12,7 +12,7 @@ export default (store) => store.subscribe((mutation, state) => {
   const payload = mutation.payload;
 
   if (type.endsWith('order/order/LAST_ORDER_CONFIRMATION')) {
-    const cartHistory = Object.assign({}, state.user.cart);
+    const cartHistory = Object.assign({}, state.cart);
     const orderId = payload.confirmation.backendOrderId;
     const products = payload.order.products.map((product, index) => createProductData(product, {position: index}));
     store.dispatch(
