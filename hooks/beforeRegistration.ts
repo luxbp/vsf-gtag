@@ -8,7 +8,7 @@ import { once, isServer } from '@vue-storefront/core/helpers'
 export function beforeRegistration (appConfig, store) {
   if (appConfig.analytics.id && !isServer) {
     once('__VUE_GTAG_VSF__', () => {
-      Vue.use(VueGtag, {
+      Vue.use(VueGtag as any, {
         config: {
           id: appConfig.analytics.id,
           appName: 'Storefront',
