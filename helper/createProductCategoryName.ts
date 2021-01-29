@@ -1,5 +1,5 @@
 import rootStore from '@vue-storefront/core/store';
-import {KEY} from '../index';
+import { KEY } from '../index';
 
 export default (product): string => {
   let currentCategory = null;

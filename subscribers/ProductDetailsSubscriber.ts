@@ -1,6 +1,6 @@
 import createProductData from '../helper/createProductData';
 import rootStore from '@vue-storefront/core/store'
-import {KEY} from '../index';
+import { KEY } from '../index';
 import Vue from 'vue';
 
 declare const dataLayer;

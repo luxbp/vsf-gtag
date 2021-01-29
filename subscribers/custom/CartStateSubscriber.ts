@@ -17,7 +17,7 @@ export default (store) => store.subscribe((mutation, state) => {
       'event': 'cartUpdate',
       'cartState': {
         'currencyCode': currency,
-        'products': items.map((product, index) => createProductData(product, {position: index})),
+        'products': items.map((product, index) => createProductData(product, { position: index })),
         'totals': store.getters['cart/getTotals']
       }
     });

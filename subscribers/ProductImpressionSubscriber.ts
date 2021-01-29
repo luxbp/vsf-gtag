@@ -1,4 +1,4 @@
-import {currentStoreView} from '@vue-storefront/core/lib/multistore'
+import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 import createProductData from '../helper/createProductData';
 import {
   PRODUCT_SET_RELATED,
@@ -12,14 +12,14 @@ export default (store) => store.subscribe((mutation, state) => {
   if (type.endsWith(PRODUCT_SET_RELATED)) { // Related Products
     let products = payload.items || [];
     Vue.prototype.$gtag.event('view_item_list', {
-      'items': products.map((product, index) => createProductData(product, {position: index}))
+      'items': products.map((product, index) => createProductData(product, { position: index }))
     });
   }
 
   if (type.endsWith(PRODUCT_SET_PAGED_PRODUCTS)) { // Category Pages
     let products = payload.items || [];
     Vue.prototype.$gtag.event('view_item_list', {
-      'items': products.map((product, index) => createProductData(product, {position: index}))
+      'items': products.map((product, index) => createProductData(product, { position: index }))
     });
   }
   // todo featured carousel impression

@@ -1,6 +1,6 @@
 import rootStore from '@vue-storefront/core/store'
-import {SET_SOURCE} from '../../store/mutation-types';
-import {KEY} from '../../index';
+import { SET_SOURCE } from '../../store/mutation-types';
+import { KEY } from '../../index';
 import * as categoryTypes from '@vue-storefront/core/modules/catalog/store/category/mutation-types';
 
 export default (store) => store.subscribe((mutation, state) => {

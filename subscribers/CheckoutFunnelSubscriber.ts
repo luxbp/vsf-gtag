@@ -22,7 +22,7 @@ export default (store) => store.subscribe((mutation, state) => {
         Vue.prototype.$gtag.event('begin_checkout', {
           'coupon': totals.coupon_code,
           'currency': totals.base_currency_code,
-          'items': Object.assign([], cart.cartItems).map((product, index) => createProductData(product, {position: index})),
+          'items': Object.assign([], cart.cartItems).map((product, index) => createProductData(product, { position: index })),
           'value': totals.subtotal - Math.abs((totals.base_discount_amount || 0))
         });
       }, 2000)
@@ -33,8 +33,8 @@ export default (store) => store.subscribe((mutation, state) => {
       Vue.prototype.$gtag.event('add_payment_info', {
         'coupon': totals.coupon_code,
         'currency': totals.base_currency_code,
-        'items': Object.assign([], cart.cartItems).map((product, index) => createProductData(product, {position: index})),
-        'value': totals.subtotal - Math.abs((totals.base_discount_amount || 0)),
+        'items': Object.assign([], cart.cartItems).map((product, index) => createProductData(product, { position: index })),
+        'value': totals.subtotal - Math.abs((totals.base_discount_amount || 0))
       });
     }
 
@@ -43,8 +43,8 @@ export default (store) => store.subscribe((mutation, state) => {
       Vue.prototype.$gtag.event('add_shipping_info', {
         'coupon': totals.coupon_code,
         'currency': totals.base_currency_code,
-        'items': Object.assign([], cart.cartItems).map((product, index) => createProductData(product, {position: index})),
-        'value': totals.subtotal - Math.abs((totals.base_discount_amount || 0)),
+        'items': Object.assign([], cart.cartItems).map((product, index) => createProductData(product, { position: index })),
+        'value': totals.subtotal - Math.abs((totals.base_discount_amount || 0))
       });
     }
   }
