@@ -35,7 +35,7 @@ export default (store) => store.subscribe((mutation, state) => {
         return;
       }
 
-      const order = orderHistory.items.find((order) => order['entity_id'].toString() === orderId);
+      const order = orderHistory.items.find((order) => (order['entity_id'] || '').toString() === orderId);
       if (order) {
         Vue.prototype.$gtag.event('purchase', {
           'transaction_id': payload.confirmation.orderNumber || orderId,
