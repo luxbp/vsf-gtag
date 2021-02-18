@@ -1,6 +1,7 @@
 import createProductData from '../helper/createProductData';
 import { currentStoreView } from '@vue-storefront/core/lib/multistore';
 import Vue from 'vue';
+import { ORDER_LAST_ORDER_WITH_CONFIRMATION } from '@vue-storefront/core/modules/order/store/mutation-types'
 
 /**
  * Order Placed
@@ -10,7 +11,7 @@ export default (store) => store.subscribe((mutation, state) => {
   const type = mutation.type;
   const payload = mutation.payload;
 
-  if (type.endsWith('order/order/LAST_ORDER_CONFIRMATION')) {
+  if (type.endsWith(ORDER_LAST_ORDER_WITH_CONFIRMATION)) {
     const cartHistory = Object.assign({}, state.cart);
     const orderId = payload.confirmation.backendOrderId;
     const products = payload.order.products.map((product, index) => createProductData(product, { position: index }));
