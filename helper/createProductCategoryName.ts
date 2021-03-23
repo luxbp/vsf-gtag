@@ -2,6 +2,10 @@ import rootStore from '@vue-storefront/core/store';
 import { KEY } from '../index';
 
 export default (product): string => {
+  if (product.external_category) {
+    return product.external_category
+  }
+
   let currentCategory = null;
   if (rootStore.state.category) {
     currentCategory = rootStore.state.category.current || false;

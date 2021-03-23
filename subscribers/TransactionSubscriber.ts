@@ -2,6 +2,7 @@ import createProductData from '../helper/createProductData';
 import { currentStoreView } from '@vue-storefront/core/lib/multistore';
 import Vue from 'vue';
 import { ORDER_LAST_ORDER_WITH_CONFIRMATION } from '@vue-storefront/core/modules/order/store/mutation-types'
+import createAffiliation from '../helper/createAffiliation'
 
 /**
  * Order Placed
@@ -26,7 +27,7 @@ export default (store) => store.subscribe((mutation, state) => {
         Vue.prototype.$gtag.event('purchase', {
           'transaction_id': payload.confirmation.orderNumber || orderId,
           'value': cartHistory.platformTotals.subtotal - Math.abs((cartHistory.platformTotals.base_discount_amount || 0)),
-          'affiliation': payload.order.affiliation || currentStoreView().storeCode,
+          'affiliation': createAffiliation(products) || payload.order.affiliation || currentStoreView().storeCode,
           'currency': 'USD',
           'tax': cartHistory.platformTotals.tax_amount,
           'shipping': cartHistory.platformTotals.shipping_amount,
@@ -40,7 +41,7 @@ export default (store) => store.subscribe((mutation, state) => {
       if (order) {
         Vue.prototype.$gtag.event('purchase', {
           'transaction_id': payload.confirmation.orderNumber || orderId,
-          'affiliation': payload.order.affiliation || currentStoreView().storeCode || order.store_name,
+          'affiliation': createAffiliation(products) || payload.order.affiliation || currentStoreView().storeCode || order.store_name,
           'value': order.subtotal - Math.abs((order.base_discount_amount || 0)),
           'currency': 'USD',
           'tax': order.tax_amount,
