@@ -2,7 +2,9 @@ export default (products: any[]): string => {
   let totals = {}
 
   products.forEach((item) => {
-    totals[item.brand] = (totals[item.brand] || 0) + (item.price * item.quantity)
+    if (item.brand) {
+      totals[item.brand] = (totals[item.brand] || 0) + (item.price * item.quantity)
+    }
   });
 
   let keys = Object.keys(totals);
