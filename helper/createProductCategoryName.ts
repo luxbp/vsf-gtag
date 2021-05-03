@@ -3,7 +3,11 @@ import { KEY } from '../index';
 
 export default (product): string => {
   if (product.external_category) {
-    return product.external_category
+    const attributes = rootStore.getters['attribute/attributeListByCode'] || {}
+
+    if (attributes.external_category) {
+      return (attributes.external_category.options || []).find(x => x.value  == product.external_category)
+    }
   }
 
   let currentCategory = null;

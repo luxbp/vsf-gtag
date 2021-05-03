@@ -36,6 +36,12 @@ export function afterRegistration (appConfig, store) {
     Vue.prototype.$gtag.customMap({ 'dimension1': 'Store Code' });
     Vue.prototype.$gtag.event('store_code_dimension', { 'Store Code': view.storeCode });
 
+    if (appConfig.analytics.linker) {
+      Vue.prototype.$gtag.linker({
+        'domains': appConfig.analytics.linker.domains || []
+      })
+    }
+
     let subscribers = [
       RouteChangeSubscriber,
       CategoryImpressionSubscriber,
