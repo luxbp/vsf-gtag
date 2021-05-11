@@ -4,6 +4,6 @@
   "main": "index.ts",
   "license": "MIT",
   "dependencies": {
-    "vue-gtag": "^1.9.1"
+    "vue-gtag": "^1.16.1"
   }
 }
