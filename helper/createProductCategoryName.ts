@@ -6,7 +6,7 @@ export default (product): string => {
     const attributes = rootStore.getters['attribute/attributeListByCode'] || {}
 
     if (attributes.external_category) {
-      return (attributes.external_category.options || []).find(x => x.value  == product.external_category)
+      return ((attributes.external_category.options || []).find(x => x.value  == product.external_category) || {}).value
     }
   }
 
