@@ -31,7 +31,7 @@ export default (store) => store.subscribe((mutation, state) => {
       chunkMultiple++;
       let chunkIndex = chunkSize * chunkMultiple;
       Vue.prototype.$gtag.event('view_item_list', {
-        'items': products.map((product, index) => createProductData(chunk, {position: chunkIndex + index}))
+        'items': chunk.map((product, index) => createProductData(product, {position: chunkIndex + index}))
       });
     })
 
