@@ -19,9 +19,22 @@ export default (store) => store.subscribe((mutation, state) => {
 
   if (type.endsWith(CATALOG_UPD_PRODUCTS)) { // Category Pages
     let products = payload.products.items || [];
-    Vue.prototype.$gtag.event('view_item_list', {
-      'items': products.map((product, index) => createProductData(product, {position: index}))
-    });
+    let chunkSize = 50;
+    let chunks = [];
+    for (let i = 0; i < products.length; i += chunkSize) {
+      const chunk = products.slice(i, i + chunkSize);
+      chunks.push(chunk);
+    }
+
+    let chunkMultiple = 0;
+    chunks.forEach((chunk) => {
+      chunkMultiple++;
+      let chunkIndex = chunkSize * chunkMultiple;
+      Vue.prototype.$gtag.event('view_item_list', {
+        'items': products.map((product, index) => createProductData(chunk, {position: chunkIndex + index}))
+      });
+    })
+
   }
   // todo featured carousel impression
 })
